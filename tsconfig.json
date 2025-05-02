@@ -1,7 +1,9 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "noImplicitAny": true,
     "strict": true,
+    "noUncheckedIndexedAccess": true,
     "paths": {
       "@/*": [
         "./*"
@@ -13,6 +15,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "nativewind-env.d.ts"
   ]
 }
