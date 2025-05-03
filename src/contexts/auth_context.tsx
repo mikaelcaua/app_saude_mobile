@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import AuthContextInterface from "../types/auth_context_interface";
-import UserInterface from "../types/user_interface";
+import AuthContextInterface from "../interfaces/auth_context_interface";
+import UserInterface from "../interfaces/user_interface";
 import { AuthService } from "../services/auth_service";
 
 const AuthContext = createContext<AuthContextInterface | null>(null);

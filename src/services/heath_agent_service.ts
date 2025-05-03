@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import HouseInterface from "../types/house_interface";
+import HouseInterface from "../interfaces/house_interface";
 
 export class HouseService {
 

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import UserInterface from "../types/user_interface";
+import UserInterface from "../interfaces/user_interface";
 
 export class AuthService {
   BASE_URL = 'http://192.168.100.97:8080/auth'

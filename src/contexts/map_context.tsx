@@ -1,9 +1,9 @@
-import React, { createContext, useEffect, useState, useContext } from "react";
 import { LocationObject } from "expo-location";
-import { LocationService } from "../services/location_service";
-import MapContextInterface from "../types/map_context_interface";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import HouseInterface from "../interfaces/house_interface";
+import MapContextInterface from "../interfaces/map_context_interface";
 import { HouseService } from "../services/heath_agent_service";
-import HouseInterface from "../types/house_interface";
+import { LocationService } from "../services/location_service";
 import { useAuth } from "./auth_context";
 
 export const MapContext = createContext<MapContextInterface | null>(null);
