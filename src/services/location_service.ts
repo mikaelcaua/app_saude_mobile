@@ -9,7 +9,7 @@ import {
       const { granted } = await requestForegroundPermissionsAsync();
   
       if (!granted) {
-        return null;
+        throw new Error("Permissão de localização não concedida");
       }
   
       const currentPosition = await getCurrentPositionAsync();

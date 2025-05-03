@@ -5,7 +5,7 @@ import { useAuth } from "@/src/contexts/auth_context";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [password, setPassword] = useState("");
   const { login, loading } = useAuth();
 
   return (
@@ -21,12 +21,12 @@ export default function LoginScreen() {
       />
       <TextInput
         placeholder="Senha"
-        value={senha}
-        onChangeText={setSenha}
+        value={password}
+        onChangeText={setPassword}
         secureTextEntry
         style={styles.input}
       />
-      <Button title={loading ? "Carregando..." : "Entrar"} onPress={()=>login('','')} disabled={loading} />
+      <Button title={loading ? "Carregando..." : "Entrar"} onPress={()=>login(email,password)} disabled={loading} />
     </View>
   );
 }

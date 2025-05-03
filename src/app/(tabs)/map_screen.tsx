@@ -1,13 +1,19 @@
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-import MapView from "react-native-maps";
-import {useMap } from "@/src/contexts/map_context";
+import { View, Text, StyleSheet } from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import { useMap } from "@/src/contexts/map_context";
 
 export default function MapScreen() {
-  const { location, loading } = useMap();
+  const { location, loading, houses } = useMap();
 
   return (
-    <SafeAreaView style={styles.container}>
-      {!loading && location ? (
+    <>
+      {loading && (
+        <View style={styles.centered}>
+          <Text>Obtendo localização...</Text>
+        </View>
+      )}
+
+      {!loading && location && (
         <MapView
           style={styles.mapStyle}
           region={{
@@ -16,13 +22,27 @@ export default function MapScreen() {
             latitudeDelta: 0.0005,
             longitudeDelta: 0.0005,
           }}
-        />
-      ) : (
+        >
+          {houses.map((house) => (
+            <Marker
+              key={house.id}
+              coordinate={{
+                latitude: house.latitude,
+                longitude: house.longitude,
+              }}
+              title={house.houseOwner}
+              description={`ID: ${house.id}`}
+            />
+          ))}
+        </MapView>
+      )}
+
+      {!loading && !location && (
         <View style={styles.centered}>
-          <Text>Obtendo localização...</Text>
+          <Text>Permissão de localização não autorizada...</Text>
         </View>
       )}
-    </SafeAreaView>
+    </>
   );
 }
 

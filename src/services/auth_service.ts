@@ -1,23 +1,32 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import UserInterface from "../types/user_interface";
 
 export class AuthService {
-    async login(email: string, password: string) {
-      const response = await axios.post('http://localhost:8080/auth/login',{
-        "email":"mikael123@gmail.com",
-        "password":12345678
-      })
+  BASE_URL = 'http://192.168.100.97:8080/auth'
 
-      if(response.status!=200){
-        console.log(response.data);
-        throw Error('Houve um erro ao se conectar com a api:'+response);
+  async login(email: string, password: string): Promise<UserInterface> {
+    try {
+
+      const response: AxiosResponse<UserInterface> =
+        await axios.post<UserInterface>(
+          `${this.BASE_URL}/login`,
+          { email, password }
+        );
+
+      if (response.status !== 200) {
+        throw new Error('Status não-OK: ' + response.status);
       }
 
-      console.log(response.data);
-      return { id: "1", name: "João", email };
-    }
-  
-    logout() {
-      return null;
+      const data: UserInterface = response.data;
+      return data;
+
+    } catch (erro) {
+      throw erro;
     }
   }
-  
+
+
+  logout() {
+    return null;
+  }
+}

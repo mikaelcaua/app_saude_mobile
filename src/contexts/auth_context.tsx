@@ -17,10 +17,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   async function login(email: string, password: string) {
-    setLoading(true);
-    const userData = await authService.login(email, password);
-    setUser(userData);
-    setLoading(false);
+    try{
+      setLoading(true);
+      const userData = await authService.login(email, password);
+      setUser(userData);
+      setLoading(false);
+    }
+    catch (error) {
+      console.error("Erro ao fazer login:", error);
+      setLoading(false);
+    }
   }
 
   function logout() {
