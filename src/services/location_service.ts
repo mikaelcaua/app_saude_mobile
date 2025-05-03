@@ -4,12 +4,11 @@ import {
     LocationObject,
   } from "expo-location";
   
-  export class LocationRepository {
+  export class LocationService {
     async getCurrentLocation(): Promise<LocationObject | null> {
       const { granted } = await requestForegroundPermissionsAsync();
   
       if (!granted) {
-        console.log("Permissão negada");
         return null;
       }
   

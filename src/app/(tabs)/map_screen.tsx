@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import MapView from "react-native-maps";
-import { useMapViewModel } from "../../src/viewmodels/map_viewmodel";
+import {useMap } from "@/src/contexts/map_context";
 
 export default function MapScreen() {
-  const { location, loading } = useMapViewModel();
+  const { location, loading } = useMap();
 
   return (
     <SafeAreaView style={styles.container}>
