@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView from "react-native-maps";
 import { useMap } from "@/src/contexts/map_context";
+import HouseMarker from "../components/house_marker";
 
 export default function MapScreen() {
   const { location, loading, houses } = useMap();
@@ -24,15 +25,7 @@ export default function MapScreen() {
           }}
         >
           {houses.map((house) => (
-            <Marker
-              key={house.id}
-              coordinate={{
-                latitude: house.latitude,
-                longitude: house.longitude,
-              }}
-              title={house.houseOwner}
-              description={`ID: ${house.id}`}
-            />
+            <HouseMarker key={house.id} house={house} />
           ))}
         </MapView>
       )}
