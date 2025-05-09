@@ -7,7 +7,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="map_screen"
         options={{
-          headerShown:false,
+          headerShown: false,
           tabBarLabel: 'Início',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
         }}

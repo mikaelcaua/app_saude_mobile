@@ -3,7 +3,7 @@ import HouseInterface from "../interfaces/house_interface";
 
 export class HouseService {
 
-  BASE_URL = 'http://192.168.100.97:8080/heath_agents'
+  BASE_URL = 'https://app-saude.devmikael.org/heath_agents'
 
   async getAllHousesFromOneHeathAgent(id:number, token:String): Promise<HouseInterface[]> {
     try {

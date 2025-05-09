@@ -1,4 +1,5 @@
-import { LocationObject } from "expo-location";
+// src/contexts/map_context.tsx
+import { LocationObject, LocationSubscription } from "expo-location";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import HouseInterface from "../interfaces/house_interface";
 import MapContextInterface from "../interfaces/map_context_interface";
@@ -12,6 +13,7 @@ export function MapProvider({ children }: { children: React.ReactNode }) {
   const [location, setLocation] = useState<LocationObject | null>(null);
   const [loading, setLoading] = useState(true);
   const [houses, setHouses] = useState<HouseInterface[]>([]);
+  const [locationSubscription, setLocationSubscription] = useState<LocationSubscription | null>(null);
   const locationService = new LocationService();
   const houseService = new HouseService();
   const { user } = useAuth();
@@ -24,7 +26,30 @@ export function MapProvider({ children }: { children: React.ReactNode }) {
       setLoading(false);
     } catch (error) {
       console.error("Erro ao obter localização:", error);
-      setLoading(false); // corrigido
+      setLoading(false);
+    }
+  }
+
+  async function startLocationTracking() {
+    try {
+      setLoading(true);
+      
+      // Iniciar com a localização atual
+      const initialLocation = await locationService.getCurrentLocation();
+      if (initialLocation) {
+        setLocation(initialLocation);
+      }
+      
+      // Iniciar monitoramento contínuo
+      const subscription = await locationService.watchLocation((newLocation) => {
+        setLocation(newLocation);
+      });
+      
+      setLocationSubscription(subscription);
+      setLoading(false);
+    } catch (error) {
+      console.error("Erro ao iniciar rastreamento de localização:", error);
+      setLoading(false);
     }
   }
 
@@ -39,7 +64,15 @@ export function MapProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    fetchLocation();
+    // Iniciar rastreamento de localização em vez de apenas buscar uma vez
+    startLocationTracking();
+    
+    // Limpar a assinatura quando o componente for desmontado
+    return () => {
+      if (locationSubscription) {
+        locationService.stopWatchingLocation();
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -47,7 +80,12 @@ export function MapProvider({ children }: { children: React.ReactNode }) {
   }, [user]);
 
   return (
-    <MapContext.Provider value={{ location, loading, houses }}>
+    <MapContext.Provider value={{ 
+      location, 
+      loading, 
+      houses,
+      refreshLocation: startLocationTracking
+    }}>
       {children}
     </MapContext.Provider>
   );

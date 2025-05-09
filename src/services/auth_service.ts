@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import UserInterface from "../interfaces/user_interface";
 
 export class AuthService {
-  BASE_URL = 'http://192.168.100.97:8080/auth'
+  BASE_URL = 'https://app-saude.devmikael.org/auth'
 
   async login(email: string, password: string): Promise<UserInterface> {
     try {
